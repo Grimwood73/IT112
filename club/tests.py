@@ -1,9 +1,6 @@
 from turtle import title
 from django.test import TestCase
-from django.contrib.auth.models import User
 from .models import Meeting, MeetingMinutes, Resource, Event
-import datetime
-
 
 class MeetingTest(TestCase):
     def setUp(self):
