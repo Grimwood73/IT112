@@ -1,10 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>Resources</h2>
+<table class="table">
+    <tr>
+        <th>Resource Name</th>
+        <th>Resource Type</th>
+        <th>URL</th>
+        <th>Date Entered</th>
+        <th>User</th>
+        <th>Description</th>
+    </tr>
+    {% for p in resource_list %}
+        <tr>
+        <td><a href="{% url 'resourcedetails' id=p.id %}">{{p.resourcename}}</a></td>
+        <td>{{p.resourcetype}}</td>
+        <td>{{p.url}}</td>
+        <td>{{p.dateentered}}</td>
+        <td>{{p.userid}}</td>
+        <td>{{p.description}}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+
+<!--
 <ul>
     {% for p in resource_list %}
         <li>{{ p.resourcename }}</li>
     {% endfor %}
 </ul>
-
-{% endblock %}
+-->

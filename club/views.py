@@ -24,6 +24,13 @@ def meetingdetails(request, id):
     }
     return render(request, 'club/meetingdetails.html', context=context)
 
+def resourcedetails(request, id):
+    prod=get_object_or_404(Resource, pk=id)
+    context={
+        'prod' : prod,
+    }
+    return render(request, 'club/resourcedetails.html', context=context)
+
 def newMeeting(request):
     form=MeetingForm
 
