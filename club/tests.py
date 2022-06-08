@@ -1,6 +1,9 @@
 from turtle import title
 from django.test import TestCase
 from .models import Meeting, MeetingMinutes, Resource, Event
+from django.contrib.auth.models import User
+import datetime
+from django.urls import reverse_lazy, reverse
 
 class MeetingTest(TestCase):
     def setUp(self):
@@ -32,14 +35,15 @@ class EventTest(TestCase):
     def test_tablename(self):
         self.assertEqual(str(Event._meta.db_table), 'event')
 
-#class MeetingMinutes(TestCase):
-    #def setUp(self):
-            #self.type=Meeting(meetingtitle='TestMeeting')
-            #self.meetingminutes=MeetingMinutes(meetingid=self.type)
+class New_Resource_Authentication_Test(TestCase):
+    def setUp(self):
+        self.test_user=User.objects.create_user(username='testuser1', password='P@ssw0rd1')
+        self.resource=Resource.objects.create(resourcename='test_resource', 
+        resourcetype='website', url='http://www.butts.com', dateentered=datetime.date(2021,1,10),
+        userid=self.test_user, description='testdescription')
 
-    #def test_typestring(self):
-        #self.assertEqual(str(meetingminutes), 'TestMeeting')
-    
-    #def test_tablename(self):
-        #self.assertEqual(str(MeetingMinutes._meta.db_table), 'meetingminutes')
+    def test_redirect_if_not_logged_in(self):
+        response=self.client.get(reverse('newresource'))
+        self.assertRedirects(response, '/accounts/login/?next=/club/newresource/')
+
 
